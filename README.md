@@ -57,14 +57,16 @@
 		```
 		sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 		```
+		
 		- should not be empty. If empty (for older version of Raspbian), try this
 		```
 		sudo nano /home/user/.config/lxsession/LXDE-pi/autostart
 		```
-		- then, copy-paste the following line at the end of lines
-		``` 
-		@lxterminal
-		```
+		
+	- then, copy-paste the following line at the end of lines
+	``` 
+	@lxterminal
+	```
 15. Disable screensaver (only for Raspbian with desktop)
 	- install xscreensaver
 	```
