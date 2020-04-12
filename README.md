@@ -53,7 +53,7 @@
 	```
 	python /home/pi/share/whereami.py
 	```
-	- auto open a terminal everytime you login (only for Raspbian with desktop)
+	- automatically open a terminal everytime you login (only for Raspbian with desktop)
 		```
 		sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 		```
