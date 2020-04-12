@@ -1,6 +1,6 @@
 # Best Practice: OpenVINO + NCS2 on Raspberry Pi Zero
 1. Download OS img of [Raspbian](https://www.raspberrypi.org/downloads/raspbian/)
-   - e.g.   Choose **Raspbian Buster with desktop** if it's your first time (**Lite** = no desktop login)
+   - e.g.   Choose **Raspbian Buster with desktop** if you're newbie (**Lite** = no desktop login)
 2. Use [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/) to write OS img into your SD card
 3. Insert SD card into Raspberry Pi
 4. Plug in mouse, keyboard, ethernet
