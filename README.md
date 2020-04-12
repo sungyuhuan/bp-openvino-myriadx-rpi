@@ -93,8 +93,8 @@
 		```
 		raspistill -d
 		```
-		you should see a captured video for seconds
-	- you can also get video frame from opencv 
+		- if it's setup correctly, you will see a captured video for seconds
+	- now, you can get video frames from opencv 
 		```
 		capture = cv.VideoCapture(0)
 		ret, frame = capture.read()
@@ -103,34 +103,69 @@
 			```
 			python3 -m pip install "picamera[array]"
 			```
-			
-## TO BE CONTINUED	
-Step5: 安裝opencv
-pip3 install opencv-python (請對應好python 版本, 建議用 python3.5/pip3)
-(4.1.1.26若遇到”undefined symbol: __atomic_fetch_add_8” 改成: pip install opencv-contrib-python==4.1.0.25)
-sudo apt install -y libatlas-base-dev libhdf5-dev libjasper-dev libqtgui4 libqt4-test
-Step6: 安裝respberry 的camera (ref)
-排線插法: 一頭藍標與鏡頭同向, 另一頭藍標與網路孔同向
-修改設定啟用 camera: sudo raspi-config
-測試相機: raspistill -d
-Step7: 安裝python API for respberry 的camera
-pip3 install "picamera[array]"
-如何與 opencv 串請參照 (ref)
-(在Zero上可以直接cv.VideoCapture(0) 拿到影像)
-在 command line cannot connect to X server:
-export DISPLAY=:0
-Step8. (For NCS2) 安裝OpenVino for Raspbian (link)
-(官方只提供 ARMv7, ARMv6要自己build)
-下載(.tgz): https://download.01.org/opencv/2020/openvinotoolkit/	
-sudo mkdir -p /opt/intel/openvino
-sudo tar -xf l_openvino_toolkit_raspbi_p_<version>.tgz --strip 1 -C /opt/intel/openvino
-sudo sed -i "s|<INSTALLDIR>|/opt/intel/openvino|" /opt/intel/openvino/bin/setupvars.sh
-sh /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
-sudo nano ~/.bashrc
-在最後面貼上:
-source /opt/intel/openvino/bin/setupvars.sh
-存檔, 離開
-以後開 terminal 都會自動設好環境變數
-sudo usermod -a -G users "$(whoami)"
-以後開 terminal 都會自動設好環境變數和USB設定
+18. Download and install OpenVINO
+	- only [ARMv7 package](https://download.01.org/opencv/2020/openvinotoolkit) is officially available now (for RPi3, RPi4)
+  - for ARMv7 RPi, just follow [official guide](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_raspbian.html) to install
+	
+	- for ARMv6 RPi, we will build OpenVINO by ourself in the next step
+		- but you still need the script in this package to add USB rules for NCS2
+			```
+			sudo usermod -a -G users "$(whoami)"
+			bash /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
+			```
+19. Build OpenVINO natively on **ARMv6** RPi (e.g. Zero, Zero W and One)
+	- install build tool and dependencies:
+		```
+		sudo apt update && apt upgrade -y
+		sudo apt install build-essential
+		sudo apt install -y git cmake libusb-1.0-0-dev
+		sudo apt install cython
+		```
+	- close the terminal then open a new one
+	- increase swpap space temporailty
+		```
+		free -h
+		sudo fallocate -l 1G /swapfile
+		sudo chmod 600 /swapfile
+		ls -lh /swapfile
+		sudo mkswap /swapfile
+		sudo swapon /swapfile
+		sudo swapon -show
+		free -h
+		```
+	- git clone **dldt**(Deep Learning Deployment Toolkit=OpenVINO) from source
+		```
+		mkdir dldt
+		git clone https://github.com/opencv/dldt.git
+		```
+	- build dldt
+		```
+		cd ~/dldt
+		git submodule init
+		git submodule update -recursive
+		mkdir build && cd build
+		sudo cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_MKL_DNN=OFF -DENABLE_CLDNN=OFF -DENABLE_SSE42=OFF -DTHREADING=SEQ -DENABLE_GNA=OFF  -DENABLE_OPENCV=OFF -DENABLE_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python3.7 -DPYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.7m.so -DPYTHON_INCLUDE_DIR=/usr/include/python3.7 ..
+		sudo make
+		```
+		- build should be successful, if you encounter error: ```symbol '_ZN2cv6String10deallocateEv'```, it's a version confliction caused by by opencv, try this
+			```
+			sudo apt-get autoremove libopencv-dev
+			```
+- next, automatically setup environment once terminal open
+	```
+	sudo nano ~/.bashrc
+	```
+	- add the following to the end of lines (this is to add the path of openvino to your environment variables)
+	  - change ```<path to where you build openvino>``` to fit your case
+	  - for my example: ```~/share/dldt/bin/armv6l/Release/lib/python_api/python3.7```
+		```
+		export PYTHONPATH=$PYTHONPATH:<path to where you build openvino>
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path to where you build openvino>
+		```
+
+
+		
+
+
+
 
