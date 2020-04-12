@@ -106,13 +106,13 @@
 18. Download and install OpenVINO
 	- only [ARMv7 package](https://download.01.org/opencv/2020/openvinotoolkit) is officially available now (for RPi3, RPi4)
 	- for ARMv7 RPi, just follow [official guide](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_raspbian.html) to install
-	- for ARMv6 RPi, we will build OpenVINO by ourself in the next step
+	- for **ARMv6 RPi**, we will build OpenVINO by ourself in the next step
 		- but you still need the script in this package to add USB rules for NCS2
 		```
 		sudo usermod -a -G users "$(whoami)"
 		bash /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
 		```
-19. Build OpenVINO natively on **ARMv6** RPi (e.g. Zero, Zero W and One)
+19. Build OpenVINO natively on **ARMv6 RPi** (e.g. Zero, Zero W and One)
 	- install build tool and dependencies:
 		```
 		sudo apt update && apt upgrade -y
@@ -121,7 +121,7 @@
 		sudo apt install cython
 		```
 	- close the terminal then open a new one
-	- increase swpap space temporailty
+	- increase swap space temporailty
 		```
 		free -h
 		sudo fallocate -l 1G /swapfile
@@ -132,12 +132,12 @@
 		sudo swapon -show
 		free -h
 		```
-	- git clone **dldt**(Deep Learning Deployment Toolkit=OpenVINO) from source
+	- git clone **dldt** (Deep Learning Deployment Toolkit=OpenVINO) from source
 		```
 		mkdir dldt
 		git clone https://github.com/opencv/dldt.git
 		```
-	- build dldt
+	- build **dldt**
 		```
 		cd ~/dldt
 		git submodule init
@@ -155,12 +155,14 @@
 	sudo nano ~/.bashrc
 	```
 	- add the following to the end of lines (this is to add the path of openvino to your environment variables)
-	  - change ```<path to where you build openvino>``` to fit your case
-	  - for my example: ```~/share/dldt/bin/armv6l/Release/lib/python_api/python3.7```
 		```
 		export PYTHONPATH=$PYTHONPATH:<path to where you build openvino>
 		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path to where you build openvino>
 		```
+	- change ```<path to where you build openvino>``` to fit your case
+	- for my example: ```~/share/dldt/bin/armv6l/Release/lib/python_api/python3.7```
+20. That's all. You have a OpenVINO + NCS2 devlopement environment on **RPi Zero **
+
 
 
 		
