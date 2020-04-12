@@ -1,4 +1,4 @@
-# Best Practice: OpenVINO + NCS2 on Raspberry Pi Zero
+# Best Practice: Python + OpenVINO + NCS2 on Raspberry Pi Zero
 1. Download OS img of [Raspbian](https://www.raspberrypi.org/downloads/raspbian/)
    - e.g.   Choose **Raspbian Buster with desktop** if you're a newbie (**Lite** = no desktop login)
 2. Use [Win32DiskImager](https://sourceforge.net/projects/win32diskimager/) to write OS img into your SD card
@@ -22,9 +22,9 @@
 	sudo apt install xrdp
 	``` 
 	- then, check your IP address
-	```
-	ifconfig
-	```
+		```
+		ifconfig
+		```
 	- now, un-plug your mouse and keyboard. You can remote login Raspberry Pi from your PC by [putty](https://www.putty.org/) or Windows Remote Desktop.
 	
 13. Install samba
@@ -33,49 +33,62 @@
 	sudo nano /etc/samba/smb.conf
 	```
 	- then, copy-paste following text to the end of lines
-	```
-	[yourfoldername] # e.g. [share]
-	path = yourfolderpath # e.g. /home/pi/share
-	writable = yes
-	guest account = root
-	force user = root
-	public = yes
-	force group = root
-	```
+		```
+		[yourfoldername] # e.g. [share]
+		path = yourfolderpath # e.g. /home/pi/share
+		writable = yes
+		guest account = root
+		force user = root
+		public = yes
+		force group = root
+		```
 	- then, ```CTRL+O``` save, ```CTRL+X``` exit
 14. Make Raspberry Pi report IP address after reboot
 	- write a python script to polling network connection status and report IP address once on-line
 	- auto execute this script everytime you open a terminal
-	```
-	sudo nano ~/.bashrc
-	```
+		```
+		sudo nano ~/.bashrc
+		```
 	- add following command at the end of lines
-	```
-	python /home/pi/share/whereami.py
-	```
+		```
+		python /home/pi/share/whereami.py
+		```
 	- automatically open a terminal everytime you login (only for Raspbian with desktop)
 		```
 		sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 		```
 		
 		- should not be empty. If empty (for older version of Raspbian), try another path like this
-		```
-		sudo nano /home/user/.config/lxsession/LXDE-pi/autostart
-		```
+			```
+			sudo nano /home/user/.config/lxsession/LXDE-pi/autostart
+			```
 		
 	- then, copy-paste the following line to the end of lines
-	``` 
-	@lxterminal
-	```
+		``` 
+		@lxterminal
+		```
 15. Disable screensaver (only for Raspbian with desktop)
 	- install xscreensaver
-	```
-	sudo apt install xscreensaver
-	```
+		```
+		sudo apt install xscreensaver
+		```
 	- then, goto desktop **Menu** (left top corner) => **preference** => **screensaver**
 	- goto the **mode** drop-down menu, select **disable screensaver** then close
 	- reboot your Raspberry Pi.
-	
+16. Install OpenCV
+	- install dependencies
+		```
+		sudo apt install -y libatlas-base-dev libhdf5-dev libjasper-dev libqtgui4 libqt4-test
+		```
+	- install opencv
+		```
+		python3 -m pip install opencv-python
+		```
+		- if you encounter error: ```undefined symbol: __atomic_fetch_add_8``` try this
+			``` 
+			pip install opencv-contrib-python==4.1.0.25
+			```
+
 ## TO BE CONTINUED	
 Step5: 安裝opencv
 pip3 install opencv-python (請對應好python 版本, 建議用 python3.5/pip3)
@@ -93,7 +106,7 @@ pip3 install "picamera[array]"
 export DISPLAY=:0
 Step8. (For NCS2) 安裝OpenVino for Raspbian (link)
 (官方只提供 ARMv7, ARMv6要自己build)
-下載(.tgz): https://download.01.org/opencv/2020/openvinotoolkit/
+下載(.tgz): https://download.01.org/opencv/2020/openvinotoolkit/	
 sudo mkdir -p /opt/intel/openvino
 sudo tar -xf l_openvino_toolkit_raspbi_p_<version>.tgz --strip 1 -C /opt/intel/openvino
 sudo sed -i "s|<INSTALLDIR>|/opt/intel/openvino|" /opt/intel/openvino/bin/setupvars.sh
