@@ -161,7 +161,7 @@
 		```
 	- change ```<path to where you build openvino>``` to fit your case
 	- for my example: ```~/share/dldt/bin/armv6l/Release/lib/python_api/python3.7```
-20. That's all. You have a OpenVINO + NCS2 devlopement environment on **RPi Zero **
+20. That's all. You have a OpenVINO + NCS2 devlopement environment on **RPi Zero**
 
 
 
