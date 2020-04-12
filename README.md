@@ -32,7 +32,7 @@
 	sudo apt install samba
 	sudo nano /etc/samba/smb.conf
 	```
-	- then, copy-paste following text at the end of lines
+	- then, copy-paste following text to the end of lines
 	```
 	[yourfoldername] # e.g. [share]
 	path = yourfolderpath # e.g. /home/pi/share
@@ -63,7 +63,7 @@
 		sudo nano /home/user/.config/lxsession/LXDE-pi/autostart
 		```
 		
-	- then, copy-paste the following line at the end of lines
+	- then, copy-paste the following line to the end of lines
 	``` 
 	@lxterminal
 	```
