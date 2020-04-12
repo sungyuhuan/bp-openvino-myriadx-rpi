@@ -105,9 +105,9 @@
 			```
 18. Download and install OpenVINO
 	- only [ARMv7 package](https://download.01.org/opencv/2020/openvinotoolkit) is officially available now (for RPi3, RPi4)
-  - for ARMv7 RPi, just follow [official guide](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_raspbian.html) to install
-	
+  - for ARMv7 RPi, just follow [official guide] to install
 	- for ARMv6 RPi, we will build OpenVINO by ourself in the next step
+	
 		- but you still need the script in this package to add USB rules for NCS2
 			```
 			sudo usermod -a -G users "$(whoami)"
