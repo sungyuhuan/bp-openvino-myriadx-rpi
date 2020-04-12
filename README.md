@@ -105,14 +105,13 @@
 			```
 18. Download and install OpenVINO
 	- only [ARMv7 package](https://download.01.org/opencv/2020/openvinotoolkit) is officially available now (for RPi3, RPi4)
-  - for ARMv7 RPi, just follow [official guide] to install
+	- for ARMv7 RPi, just follow [official guide](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_raspbian.html) to install
 	- for ARMv6 RPi, we will build OpenVINO by ourself in the next step
-	
 		- but you still need the script in this package to add USB rules for NCS2
-			```
-			sudo usermod -a -G users "$(whoami)"
-			bash /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
-			```
+		```
+		sudo usermod -a -G users "$(whoami)"
+		bash /opt/intel/openvino/install_dependencies/install_NCS_udev_rules.sh
+		```
 19. Build OpenVINO natively on **ARMv6** RPi (e.g. Zero, Zero W and One)
 	- install build tool and dependencies:
 		```
