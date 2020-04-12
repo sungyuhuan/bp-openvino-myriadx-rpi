@@ -58,7 +58,7 @@
 		sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 		```
 		
-		- should not be empty. If empty (for older version of Raspbian), try this
+		- should not be empty. If empty (for older version of Raspbian), try another path like this
 		```
 		sudo nano /home/user/.config/lxsession/LXDE-pi/autostart
 		```
