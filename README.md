@@ -88,7 +88,22 @@
 			``` 
 			pip install opencv-contrib-python==4.1.0.25
 			```
-
+17. Install picamera
+	- test your picamera (if you have one and have it plugged into)
+		```
+		raspistill -d
+		```
+		you should see a captured video for seconds
+	- you can also get video frame from opencv 
+		```
+		capture = cv.VideoCapture(0)
+		ret, frame = capture.read()
+		```
+		- if not, try [PiCamera module](https://stackoverflow.com/questions/34026097/using-a-pi-camera-module-with-opencv-python)
+			```
+			python3 -m pip install "picamera[array]"
+			```
+			
 ## TO BE CONTINUED	
 Step5: 安裝opencv
 pip3 install opencv-python (請對應好python 版本, 建議用 python3.5/pip3)
